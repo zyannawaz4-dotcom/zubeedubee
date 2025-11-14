@@ -200,10 +200,71 @@ button {
 </div>
 
 <!-- CAKE -->
-<div id="cakeArea">
-    <canvas id="cakeCanvas" width="350" height="350"></canvas>
-</div>
-<button id="cakeBtn" style="display:none;" onclick="nextStep()">Let's Cut The Cake 🎀</button>
+/* CAKE LOGIC */
+let step = 0;
+let canvas = document.getElementById("cakeCanvas");
+let ctx = canvas.getContext("2d");
+let flame = false;
+
+function drawCake() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // Draw cake (white round)
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(200,250,100,0,Math.PI*2); // bottom layer
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(200,200,70,0,Math.PI*2); // top layer
+    ctx.fill();
+
+    // Draw candle (pink)
+    ctx.fillStyle = "#ff69b4";
+    ctx.fillRect(195,100,10,60);
+
+    // Draw flame
+    if(flame){
+        ctx.beginPath();
+        ctx.arc(200,95,12,0,Math.PI*2);
+        ctx.fillStyle = "yellow";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(200,95,6,0,Math.PI*2);
+        ctx.fillStyle = "orange";
+        ctx.fill();
+    }
+}
+
+function nextStep() {
+    step++;
+    if(step===1){
+        document.getElementById("cakeBtn").innerText="Light Candle";
+    } else if(step===2){
+        flame=true;
+        drawCake();
+        document.getElementById("cakeBtn").innerText="Blow Candle";
+    } else if(step===3){
+        // Countdown 3 seconds
+        let countdown=3;
+        document.getElementById("cakeBtn").innerText = `Blow in ${countdown}`;
+        let timer = setInterval(()=>{
+            countdown--;
+            if(countdown>0){
+                document.getElementById("cakeBtn").innerText = `Blow in ${countdown}`;
+            } else {
+                clearInterval(timer);
+                flame=false;
+                drawCake();
+                document.getElementById("cakeBtn").innerText = "Cut The Cake 🍰";
+            }
+        },1000);
+    } else if(step===4){
+        enableCutting();
+        document.getElementById("cakeBtn").style.display="none";
+    }
+}
+
 
 <!-- POPUP -->
 <div id="popup">🎉 Happy Birthday Zubeesha 🎉</div>
