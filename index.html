@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Zubeesha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Cute Handwriting Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------- GLOBAL ---------------- */
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: #ffd6f4;
+    font-family: "Itim", cursive;
+    text-align: center;
+    cursor: none; /* hide cursor */
+}
+
+/* ---------------- TYPING INTRO ---------------- */
+#typingIntro {
+    font-size: 38px;
+    color: #ff2e8f;
+    text-shadow: 2px 2px white;
+    margin-top: 40px;
+    white-space: pre-wrap;
+    border-right: 3px solid #ff2e8f;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    animation: caret 0.7s infinite;
+}
+@keyframes caret { 
+    50% { border-color: transparent; }
+}
+
+/* ---------------- BACKGROUND SPARKLES ---------------- */
+.sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: white;
+    opacity: 0.8;
+    border-radius: 50%;
+    animation: fall 5s linear infinite;
+}
+@keyframes fall {
+    0% { transform: translateY(-10px); opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0; }
+}
+
+/* ---------------- FLOATING HEARTS ---------------- */
+.heart {
+    position: fixed;
+    color: #ff5fa9;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+}
+@keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+    100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+}
+
+/* ---------------- BALLOONS ---------------- */
+.balloon {
+    position: fixed;
+    width: 60px;
+    animation: balloons 10s linear infinite;
+}
+@keyframes balloons {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-120vh); }
+}
+
+/* ---------------- GLITTER CURSOR ---------------- */
+.cursor-sparkle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: hotpink;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 0.5s ease-out;
+}
+@keyframes sparkle {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(3); opacity: 0; }
+}
+
+button {
+    background: #ff56a7;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 40px;
+    font-size: 22px;
+    margin-top: 20px;
+    cursor: pointer;
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+    from { box-shadow: 0 0 5px #ff8ecf; }
+    to { box-shadow: 0 0 25px #ff2e8f; }
+}
+
+/* ---------------- LETTER MESSAGE ---------------- */
+#letterContainer {
+    display: none;
+    margin-top: 30px;
+}
+
+#envelope {
+    width: 260px;
+    height: 180px;
+    background: pink;
+    margin: auto;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#envelope:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+    border-bottom: 90px solid #ff9ecb;
+}
+
+#letter {
+    display: none;
+    width: 240px;
+    margin: auto;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    animation: fadeIn 1s;
+    font-size: 18px;
+    color: #ff2e8f;
+    margin-top: 10px;
+}
+
+/* ---------------- CAKE CANVAS ---------------- */
+#cakeArea { display: none; }
+
+#cakeCanvas {
+    border-radius: 20px;
+    background: #fff;
+    margin-top: 20px;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ---------------- SLIDESHOW ---------------- */
+#slideshow {
+    display: none;
+    margin-top: 30px;
+}
+
+.slideImg {
+    width: 90%;
+    border-radius: 20px;
+    box-shadow: 0 0 20px pink;
+    animation: slideFade 1s;
+}
+@keyframes slideFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ---------------- POPUP ---------------- */
+#popup {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.7);
+    color:white;
+    font-size:50px;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:1000;
+}
+
+/* ---------------- CONFETTI ---------------- */
+.confetti {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    animation: drop linear infinite;
+}
+@keyframes drop {
+    to { transform: translateY(110vh) rotate(720deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a2e0a73fd.mp3?filename=happy-birthday-109499.mp3">
+</audio>
+
+<!-- TYPING INTRO -->
+<div id="typingIntro"></div>
+
+<button id="startBtn" onclick="startSequence()">Continue 🎀</button>
+
+<!-- LETTER MESSAGE -->
+<div id="letterContainer">
+    <div id="envelope" onclick="openLetter()"></div>
+    <div id="letter">
+        Dear Zubeesha 💗,<br><br>
+        You are special, precious, loved & magical.<br>
+        Today is all about YOU!<br><br>
+        💕 Happy Birthday Princess 💕
+    </div>
+</div>
+
+<!-- CAKE AREA -->
+<div id="cakeArea">
+    <canvas id="cakeCanvas" width="350" height="350"></canvas>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="slideshow">
+    <img id="slideImg" class="slideImg" src="1.jpeg">
+</div>
+
+<!-- POPUP -->
+<div id="popup"><div>🎉 Happy Birthday Zubeesha 🎉</div></div>
+
+<script>
+/* ---------------- TYPING INTRO ---------------- */
+let introText = "Happy Birthday\nSweet & Beautiful\nZubeesha 🎀";
+let i = 0;
+
+function type() {
+    if (i < introText.length) {
+        document.getElementById("typingIntro").textContent += introText.charAt(i);
+        i++;
+        setTimeout(type, 80);
+    }
+}
+type();
+
+/* ---------------- CONTINUE → SHOW LETTER ---------------- */
+function startSequence() {
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("letterContainer").style.display = "block";
+}
+
+/* ---------------- LETTER OPEN ---------------- */
+function openLetter() {
+    document.getElementById("letter").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("letterContainer").style.display = "none";
+        document.getElementById("cakeArea").style.display = "block";
+        drawCake();
+        document.getElementById("startCakeBtn").style.display = "block";
+    }, 3000);
+}
+
+/* ---------------- CAKE LOGIC ---------------- */
+let step = 0;
+let flame = true;
+let canvas, ctx;
+let drawing = false;
+
+document.body.insertAdjacentHTML("beforeend",
+    `<button id="cakeBtn" style="display:none;" onclick="nextStep()">Let's Cut The Cake 🎀</button>`
+);
+
+function drawCake() {
+    canvas = document.getElementById("cakeCanvas");
+    ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0,0,350,350);
+
+    ctx.fillStyle="#ff9ecb"; ctx.fillRect(60,160,230,140);
+    ctx.fillStyle="#ff65b3"; ctx.fillRect(60,130,230,40);
+
+    ctx.fillStyle="white"; ctx.fillRect(170,50,20,80);
+
+    if(flame){ctx.beginPath();ctx.arc(180,40,12,0,7);ctx.fillStyle="yellow";ctx.fill();}
+}
+
+function nextStep() {
+    step++;
+
+    if(step==1){
+        document.getElementById("cakeBtn").innerText="Light Candle";
+    }
+    if(step==2){
+        flame=true; drawCake();
+        document.getElementById("cakeBtn").innerText="Blow Candle";
+    }
+    if(step==3){
+        flame=false; drawCake();
+        document.getElementById("cakeBtn").innerText="Cut The Cake 🍰";
+    }
+    if(step==4){
+        enableCutting();
+        document.getElementById("cakeBtn").style.display="none";
+    }
+}
+
+/* ---------------- CUTTING ---------------- */
+function enableCutting(){
+    canvas.addEventListener("touchstart",()=>drawing=true);
+    canvas.addEventListener("touchend",finishCut);
+    canvas.addEventListener("touchmove",e=>{
+        if(!drawing) return;
+        let r=canvas.getBoundingClientRect();
+        let x=e.touches[0].clientX-r.left;
+        let y=e.touches[0].clientY-r.top;
+        ctx.strokeStyle="white"; ctx.lineWidth=12;
+        ctx.lineTo(x,y); ctx.stroke();
+    });
+}
+
+function finishCut(){
+    drawing=false;
+    confettiBurst();
+    showPopup();
+}
+
+/* ---------------- POPUP & SLIDESHOW ---------------- */
+function showPopup(){
+    document.getElementById("popup").style.display="flex";
+    setTimeout(()=>{
+        document.getElementById("popup").style.display="none";
+        startSlideshow();
+    },3000);
+}
+
+let slideIndex=1;
+function startSlideshow(){
+    document.getElementById("slideshow").style.display="block";
+    setInterval(()=>{
+        slideIndex++;
+        if(slideIndex>4) slideIndex=1;
+        document.getElementById("slideImg").src=slideIndex+".jpeg";
+    },2500);
+}
+
+/* ---------------- CONFETTI ---------------- */
+function confettiBurst(){
+    for(let i=0;i<80;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*window.innerWidth+"px";
+        c.style.background=["#ff2e8f","#ff9ecb","#ffd6ea","white"][Math.floor(Math.random()*4)];
+        c.style.animationDuration=(2+Math.random()*3)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),5000);
+    }
+}
+
+/* ---------------- SPARKLES BACKGROUND ---------------- */
+setInterval(()=>{
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.style.left=Math.random()*window.innerWidth+"px";
+    s.style.animationDuration=3+Math.random()*4+"s";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),7000);
+},150);
+
+/* ---------------- FLOATING HEARTS ---------------- */
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💗";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.animationDuration=4+Math.random()*4+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+},500);
+
+/* ---------------- BALLOONS ---------------- */
+setInterval(()=>{
+    let b=document.createElement("img");
+    b.className="balloon";
+    b.src="https://i.imgur.com/9YjOe7P.png";
+    b.style.left=Math.random()*window.innerWidth+"px";
+    b.style.animationDuration=6+Math.random()*5+"s";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),11000);
+},900);
+
+/* ---------------- GLITTER CURSOR ---------------- */
+document.addEventListener("mousemove",e=>sparkle(e.clientX,e.clientY));
+document.addEventListener("touchmove",e=>{
+    let t=e.touches[0];
+    sparkle(t.clientX,t.clientY);
+});
+function sparkle(x,y){
+    let d=document.createElement("div");
+    d.className="cursor-sparkle";
+    d.style.left=x+"px";
+    d.style.top=y+"px";
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),400);
+}
+</script>
+
+</body>
+</html>
