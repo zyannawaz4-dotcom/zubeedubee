@@ -10,35 +10,34 @@
 
 <style>
 body {
-    margin:0;
-    font-family:"Itim", cursive;
-    background:#ffd6f4;
-    text-align:center;
-    overflow-x:hidden;
-    cursor:none;
+    margin: 0;
+    background: #ffd6f4;
+    font-family: "Itim", cursive;
+    text-align: center;
+    overflow-x: hidden;
+    cursor: none;
 }
-
 /* Typing intro */
 #typingIntro {
-    font-size:38px;
-    color:#ff2e8f;
-    margin-top:40px;
-    white-space:pre-wrap;
-    border-right:3px solid #ff2e8f;
-    width:fit-content;
-    margin:auto;
-    overflow:hidden;
+    font-size: 38px;
+    color: #ff2e8f;
+    margin-top: 40px;
+    white-space: pre-wrap;
+    border-right: 3px solid #ff2e8f;
+    width: fit-content;
+    margin: auto;
+    overflow: hidden;
 }
 
-/* Buttons */
+/* Button */
 button {
-    background:#ff56a7;
-    color:white;
-    border:none;
-    padding:15px 35px;
-    border-radius:40px;
-    font-size:22px;
-    cursor:pointer;
+    background: #ff56a7;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 40px;
+    font-size: 22px;
+    cursor: pointer;
     animation: glow 1.5s infinite alternate;
 }
 @keyframes glow {
@@ -49,13 +48,9 @@ button {
 /* Envelope */
 #letterContainer { display:none; margin-top:30px; }
 #envelope {
-    width:260px; height:180px;
-    margin:auto;
-    background:pink;
-    border-radius:10px;
-    position:relative;
-    cursor:pointer;
-    box-shadow:0 0 15px #ff9ecb;
+    width:260px; height:180px; margin:auto;
+    background:pink; border-radius:10px; position:relative;
+    cursor:pointer; box-shadow:0 0 15px #ff9ecb;
 }
 #envelope:before {
     content:"";
@@ -76,9 +71,9 @@ button {
     font-size:18px;
 }
 
-/* Cake */
+/* Cake area */
 #cakeArea { display:none; margin-top:20px; }
-#cakeCanvas { background:#fff; border-radius:20px; }
+#cakeCanvas { background:#ffd6f4; border-radius:10px; }
 
 /* Slideshow */
 #slideshow { display:none; margin-top:20px; }
@@ -86,68 +81,59 @@ button {
 
 /* Popup */
 #popup {
-    display:none;
-    position:fixed;
-    top:0; left:0;
+    display:none; position:fixed; top:0; left:0;
     width:100%; height:100%;
     background:rgba(0,0,0,0.7);
-    color:white;
-    font-size:40px;
-    justify-content:center;
-    align-items:center;
+    color:white; font-size:40px;
+    justify-content:center; align-items:center;
     z-index:999;
-    display:flex;
+    flex-direction:column;
 }
 
-/* Sparkle cursor */
+/* Cursor sparkle */
 .cursor-sparkle {
-    position:fixed;
-    width:10px; height:10px;
-    background:hotpink;
-    border-radius:50%;
+    position: fixed; width:10px; height:10px;
+    background:hotpink; border-radius:50%;
     pointer-events:none;
-    animation:sparkle 0.5s ease-out;
+    animation: sparkle 0.5s ease-out;
 }
 @keyframes sparkle { from {transform:scale(1);opacity:1;} to {transform:scale(3);opacity:0;} }
 
 /* Floating hearts */
 .heart {
-    position:fixed;
-    font-size:24px;
-    color:pink;
-    animation:floatUp 4s linear infinite;
+    position: fixed;
+    font-size: 24px;
+    color: pink;
+    animation: floatUp 4s linear infinite;
 }
-@keyframes floatUp { 0% { transform:translateY(0) scale(1); } 100% { transform:translateY(-800px) scale(1.5);} }
+@keyframes floatUp { 0%{transform:translateY(0) scale(1);}100%{transform:translateY(-800px) scale(1.5);} }
 
 /* Confetti */
 .confetti-piece {
-    position:fixed;
-    width:10px;height:10px;
-    background:#ff69b4;
-    opacity:0.8;
-    animation:confettiFall 3s linear infinite;
+    position: fixed; width: 10px; height:10px;
+    background: #ff69b4; opacity:0.8;
+    animation: confettiFall 3s linear infinite;
 }
-@keyframes confettiFall { 0% { transform:translateY(-10px) rotate(0deg);} 100% { transform:translateY(800px) rotate(360deg);} }
+@keyframes confettiFall {0%{transform:translateY(-10px) rotate(0deg);}100%{transform:translateY(800px) rotate(360deg);}}
 
 /* Balloons */
 .balloon {
-    position:fixed;
-    width:40px; height:60px;
-    background:pink;
-    border-radius:50%;
-    animation:fly 8s linear infinite;
+    position: fixed;
+    width: 40px; height:60px;
+    background: pink; border-radius:50%;
+    animation: fly 8s linear infinite;
 }
-@keyframes fly { 0% { transform:translateY(800px) translateX(0);} 100% { transform:translateY(-200px) translateX(100px);} }
+@keyframes fly {0%{transform:translateY(800px) translateX(0);}100%{transform:translateY(-200px) translateX(100px);}}
 </style>
 </head>
 <body>
 
-<!-- Music -->
+<!-- MUSIC -->
 <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a2e0a73fd.mp3?filename=happy-birthday-109499.mp3">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a2e0a73fd.mp3?filename=happy-birthday-109499.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Typing Intro -->
+<!-- Typing intro -->
 <div id="typingIntro"></div>
 <button id="startBtn" onclick="showEnvelope()">Continue 🎀</button>
 
@@ -165,11 +151,11 @@ button {
 <!-- Cake -->
 <div id="cakeArea">
     <canvas id="cakeCanvas" width="400" height="400"></canvas><br>
-    <button id="cakeBtn" onclick="nextStep()">Let's Cut The Cake 🎀</button>
+    <button id="cakeBtn" onclick="nextStep()">Start Cake 🎂</button>
 </div>
 
 <!-- Popup -->
-<div id="popup">🎉 Happy Birthday Zubeesha 🎉</div>
+<div id="popup"></div>
 
 <!-- Slideshow -->
 <div id="slideshow">
@@ -177,26 +163,25 @@ button {
 </div>
 
 <script>
-/* Typing Intro */
+/* TYPING INTRO */
 let intro = "Happy Birthday\nAnnoying & Intelligent\nZubeesha 🎀";
-let idx = 0;
-function type() {
-    if (idx < intro.length) {
-        document.getElementById("typingIntro").textContent += intro.charAt(idx);
-        idx++;
-        setTimeout(type, 80);
+let idx=0;
+function typeIntro(){
+    if(idx<intro.length){
+        document.getElementById("typingIntro").textContent += intro[idx++];
+        setTimeout(typeIntro,80);
     }
 }
-type();
+typeIntro();
 
-/* Show Envelope */
-function showEnvelope() {
+/* SHOW ENVELOPE */
+function showEnvelope(){
     document.getElementById("startBtn").style.display="none";
     document.getElementById("letterContainer").style.display="block";
 }
 
-/* Open Letter */
-function openLetter() {
+/* OPEN LETTER */
+function openLetter(){
     document.getElementById("letter").style.display="block";
     setTimeout(()=>{
         document.getElementById("letterContainer").style.display="none";
@@ -205,50 +190,49 @@ function openLetter() {
     },2000);
 }
 
-/* Cake Logic */
-let step=0, flame=false, canvas=document.getElementById("cakeCanvas"), ctx=canvas.getContext("2d");
+/* CAKE LOGIC */
+let step=0;
+let flame=false;
+let canvas=document.getElementById("cakeCanvas");
+let ctx=canvas.getContext("2d");
 
 function drawCake(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     // Cake layers
-    ctx.fillStyle="#fff";
+    ctx.fillStyle="#ffffff";
     ctx.beginPath();
-    ctx.arc(200,250,100,0,2*Math.PI);
-    ctx.fill();
+    ctx.arc(200,250,100,0,Math.PI*2); ctx.fill();
     ctx.beginPath();
-    ctx.arc(200,200,70,0,2*Math.PI);
-    ctx.fill();
+    ctx.arc(200,200,70,0,Math.PI*2); ctx.fill();
     // Candle
     ctx.fillStyle="#ff69b4";
-    ctx.fillRect(195,100,10,60);
+    ctx.fillRect(195,110,10,60);
+    // Flame
     if(flame){
         ctx.beginPath();
-        ctx.arc(200,95,12,0,2*Math.PI);
+        ctx.arc(200,105,12,0,Math.PI*2);
         ctx.fillStyle="yellow"; ctx.fill();
         ctx.beginPath();
-        ctx.arc(200,95,6,0,2*Math.PI);
+        ctx.arc(200,105,6,0,Math.PI*2);
         ctx.fillStyle="orange"; ctx.fill();
     }
 }
 
 function nextStep(){
-    step++;
     let btn=document.getElementById("cakeBtn");
+    step++;
     if(step===1){ btn.innerText="Light Candle"; }
     else if(step===2){ flame=true; drawCake(); btn.innerText="Blow Candle"; }
     else if(step===3){
         let countdown=3;
-        btn.innerText=`Blow in ${countdown}`;
         let timer=setInterval(()=>{
-            countdown--;
-            if(countdown>0) btn.innerText=`Blow in ${countdown}`;
-            else { clearInterval(timer); flame=false; drawCake(); btn.innerText="Cut The Cake 🍰"; }
+            if(countdown>0){ btn.innerText="Blow in "+countdown; countdown--; }
+            else{ clearInterval(timer); flame=false; drawCake(); btn.innerText="Cut The Cake 🍰"; step++; }
         },1000);
-    }
-    else if(step===4){ enableCutting(); btn.style.display="none"; }
+    }else if(step===4){ enableCutting(); btn.style.display="none"; }
 }
 
-/* Cake Cutting */
+/* CAKE CUTTING */
 let cutting=false;
 function enableCutting(){
     canvas.addEventListener("touchstart",()=>cutting=true);
@@ -263,35 +247,35 @@ function enableCutting(){
     });
 }
 
-/* Finish cutting -> Popup & Slideshow */
 function finishCut(){
     cutting=false;
-    document.getElementById("cakeArea").style.display="none";
     showPopup();
 }
+
+/* POPUP */
 function showPopup(){
-    document.getElementById("popup").style.display="flex";
+    let popup=document.getElementById("popup");
+    popup.style.display="flex";
+    popup.innerHTML="🎉 Happy Birthday Zubeesha 🎉";
     setTimeout(()=>{
-        document.getElementById("popup").style.display="none";
+        popup.style.display="none";
         startSlideshow();
     },3000);
 }
 
-/* Slideshow */
+/* SLIDESHOW */
 let slide=1;
 function startSlideshow(){
     document.getElementById("slideshow").style.display="block";
     setInterval(()=>{
         slide++; if(slide>4) slide=1;
-        document.getElementById("slideImg").src = slide + ".jpg";
+        document.getElementById("slideImg").src=slide+".jpg";
     },2500);
 }
 
-/* Glitter Cursor */
+/* CURSOR SPARKLE */
 document.addEventListener("mousemove",e=>sparkle(e.clientX,e.clientY));
-document.addEventListener("touchmove",e=>{
-    let t=e.touches[0]; sparkle(t.clientX,t.clientY);
-});
+document.addEventListener("touchmove",e=>{ let t=e.touches[0]; sparkle(t.clientX,t.clientY); });
 function sparkle(x,y){
     let d=document.createElement("div");
     d.className="cursor-sparkle";
@@ -300,7 +284,7 @@ function sparkle(x,y){
     setTimeout(()=>d.remove(),400);
 }
 
-/* Floating Hearts */
+/* FLOATING HEARTS */
 setInterval(()=>{
     let h=document.createElement("div");
     h.className="heart";
@@ -311,7 +295,7 @@ setInterval(()=>{
     setTimeout(()=>h.remove(),4000);
 },500);
 
-/* Balloons */
+/* BALLOONS */
 setInterval(()=>{
     let b=document.createElement("div");
     b.className="balloon";
@@ -320,7 +304,7 @@ setInterval(()=>{
     setTimeout(()=>b.remove(),8000);
 },1500);
 
-/* Confetti */
+/* CONFETTI */
 setInterval(()=>{
     let c=document.createElement("div");
     c.className="confetti-piece";
@@ -328,7 +312,6 @@ setInterval(()=>{
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000);
 },200);
-
 </script>
 
 </body>
