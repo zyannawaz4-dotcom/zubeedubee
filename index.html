@@ -17,6 +17,7 @@ body {
     overflow-x: hidden;
     cursor: none;
 }
+
 /* Typing intro */
 #typingIntro {
     font-size: 38px;
@@ -74,6 +75,7 @@ button {
 /* Cake area */
 #cakeArea { display:none; margin-top:20px; }
 #cakeCanvas { background:#ffd6f4; border-radius:10px; }
+#cakeArea p { font-size:18px; color:#ff2e8f; }
 
 /* Slideshow */
 #slideshow { display:none; margin-top:20px; }
@@ -151,7 +153,7 @@ button {
 <!-- Cake -->
 <div id="cakeArea">
     <canvas id="cakeCanvas" width="400" height="400"></canvas><br>
-    <button id="cakeBtn" onclick="lightCandle()">Light Candle 🕯️</button>
+    <p>Click the candle to light it. Click again to blow it out!</p>
 </div>
 
 <!-- Popup -->
@@ -190,10 +192,11 @@ function openLetter(){
     },2000);
 }
 
-/* CAKE CANVAS */
+/* CAKE & CANDLE */
 let canvas = document.getElementById("cakeCanvas");
 let ctx = canvas.getContext("2d");
-let flame = false;
+
+let flame = false; // candle flame on/off
 let cake = {
     x: 200,
     y: 250,
@@ -202,70 +205,98 @@ let cake = {
     sliceRemoved: []
 };
 
-function drawCake(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+// Draw flickering flame
+function drawFlame() {
+    if (!flame) return;
 
-    for(let i=0;i<cake.layers;i++){
+    let candleHeight = 60;
+    let flameX = cake.x;
+    let flameY = cake.y - cake.layers*40 - candleHeight - 10;
+
+    let radius = 5 + Math.random() * 5;
+
+    ctx.beginPath();
+    ctx.arc(flameX, flameY, radius, 0, Math.PI*2);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(flameX, flameY, radius/2, 0, Math.PI*2);
+    ctx.fillStyle = "orange";
+    ctx.fill();
+}
+
+// Draw cake
+function drawCake() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < cake.layers; i++) {
         ctx.beginPath();
         ctx.arc(cake.x, cake.y - i*40, cake.radius, 0, Math.PI*2);
-        ctx.fillStyle="#fff0f5";
+        ctx.fillStyle = "#fff0f5";
         ctx.fill();
-        ctx.lineWidth=3;
-        ctx.strokeStyle="#ff69b4";
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#ff69b4";
         ctx.stroke();
     }
 
-    // candle
-    ctx.fillStyle="#ff69b4";
-    ctx.fillRect(cake.x-5, cake.y - cake.layers*40 - 60, 10, 60);
-
-    // flame
-    if(flame){
+    cake.sliceRemoved.forEach(s => {
         ctx.beginPath();
-        ctx.arc(cake.x, cake.y - cake.layers*40 - 70, 10, 0, Math.PI*2);
-        ctx.fillStyle="yellow"; ctx.fill();
-        ctx.beginPath();
-        ctx.arc(cake.x, cake.y - cake.layers*40 - 70, 5, 0, Math.PI*2);
-        ctx.fillStyle="orange"; ctx.fill();
-    }
-
-    // removed slices
-    cake.sliceRemoved.forEach(s=>{
-        ctx.beginPath();
-        ctx.moveTo(cake.x,cake.y);
-        ctx.arc(cake.x,cake.y,cake.radius,s.start,s.end,false);
-        ctx.fillStyle="#ffd6f4";
+        ctx.moveTo(cake.x, cake.y);
+        ctx.arc(cake.x, cake.y, cake.radius, s.start, s.end, false);
+        ctx.fillStyle = "#ffd6f4";
         ctx.fill();
     });
+
+    let candleHeight = 60;
+    ctx.fillStyle = "#ff69b4";
+    ctx.fillRect(cake.x-5, cake.y - cake.layers*40 - candleHeight, 10, candleHeight);
+
+    drawFlame();
 }
 
-function lightCandle(){ flame=true; drawCake(); }
+// Click candle to toggle flame
+canvas.addEventListener("click", function(e) {
+    let rect = canvas.getBoundingClientRect();
+    let mx = e.clientX - rect.left;
+    let my = e.clientY - rect.top;
+
+    let candleTopY = cake.y - cake.layers*40 - 60;
+    if (mx > cake.x-10 && mx < cake.x+10 && my > candleTopY-10 && my < candleTopY+60) {
+        flame = !flame;
+        drawCake();
+        if (!flame) showPopup(); // trigger popup when blown
+    }
+});
+
+// Animate flickering flame
+setInterval(() => { if (flame) drawCake(); }, 100);
 
 /* Cake cutting */
-let cutting=false;
-canvas.addEventListener("mousedown", ()=>{ cutting=true; });
-canvas.addEventListener("mouseup", finishCut);
-canvas.addEventListener("mousemove", e=>{ if(!cutting) return; cutSlice(e.offsetX,e.offsetY); });
-canvas.addEventListener("touchstart", ()=>{ cutting=true; });
-canvas.addEventListener("touchend", finishCut);
-canvas.addEventListener("touchmove", e=>{ if(!cutting) return; let t=e.touches[0]; cutSlice(t.clientX-canvas.getBoundingClientRect().left,t.clientY-canvas.getBoundingClientRect().top); });
+let cutting = false;
+canvas.addEventListener("mousedown", () => { cutting = true; });
+canvas.addEventListener("mouseup", () => { cutting = false; });
+canvas.addEventListener("mousemove", e => {
+    if(!cutting) return;
+    let rect = canvas.getBoundingClientRect();
+    let mx = e.clientX - rect.left;
+    let my = e.clientY - rect.top;
+    cutSlice(mx, my);
+});
 
-function cutSlice(mx,my){
-    let angle=Math.atan2(my-cake.y,mx-cake.x);
-    if(angle<0) angle+=2*Math.PI;
-    for(let s of cake.sliceRemoved){ if(angle>=s.start && angle<=s.end) return; }
-    cake.sliceRemoved.push({start:angle-0.15,end:angle+0.15});
+function cutSlice(mx, my){
+    let angle = Math.atan2(my - cake.y, mx - cake.x);
+    if(angle<0) angle += 2*Math.PI;
+
+    for(let s of cake.sliceRemoved){
+        if(angle>=s.start && angle<=s.end) return;
+    }
+
+    cake.sliceRemoved.push({start:angle-0.15, end:angle+0.15});
     drawCake();
 }
 
-function finishCut(){
-    cutting=false;
-    if(cake.sliceRemoved.length >=1) showPopup();
-}
-
-drawCake();
-
-/* POPUP */
+/* Popup */
 function showPopup(){
     let popup=document.getElementById("popup");
     popup.style.display="flex";
@@ -276,7 +307,7 @@ function showPopup(){
     },3000);
 }
 
-/* SLIDESHOW */
+/* Slideshow */
 let slide=1;
 function startSlideshow(){
     document.getElementById("slideshow").style.display="block";
@@ -286,7 +317,7 @@ function startSlideshow(){
     },2500);
 }
 
-/* CURSOR SPARKLE */
+/* Cursor sparkle */
 document.addEventListener("mousemove",e=>sparkle(e.clientX,e.clientY));
 document.addEventListener("touchmove",e=>{ let t=e.touches[0]; sparkle(t.clientX,t.clientY); });
 function sparkle(x,y){
@@ -297,7 +328,7 @@ function sparkle(x,y){
     setTimeout(()=>d.remove(),400);
 }
 
-/* FLOATING HEARTS */
+/* Floating hearts */
 setInterval(()=>{
     let h=document.createElement("div");
     h.className="heart";
@@ -308,7 +339,7 @@ setInterval(()=>{
     setTimeout(()=>h.remove(),4000);
 },500);
 
-/* BALLOONS */
+/* Balloons */
 setInterval(()=>{
     let b=document.createElement("div");
     b.className="balloon";
@@ -317,7 +348,7 @@ setInterval(()=>{
     setTimeout(()=>b.remove(),8000);
 },1500);
 
-/* CONFETTI */
+/* Confetti */
 setInterval(()=>{
     let c=document.createElement("div");
     c.className="confetti-piece";
@@ -325,6 +356,7 @@ setInterval(()=>{
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000);
 },200);
+
 </script>
 </body>
 </html>
