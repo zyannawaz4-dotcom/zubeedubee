@@ -9,38 +9,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 
 <style>
-/* BASIC STYLING */
 body {
-    margin: 0;
-    background: #ffd6f4;
-    font-family: "Itim", cursive;
-    text-align: center;
-    overflow-x: hidden;
-    cursor: none;
+    margin:0;
+    font-family:"Itim", cursive;
+    background:#ffd6f4;
+    text-align:center;
+    overflow-x:hidden;
+    cursor:none;
 }
 
-/* TYPING INTRO */
+/* Typing intro */
 #typingIntro {
-    font-size: 38px;
-    color: #ff2e8f;
-    margin-top: 40px;
-    white-space: pre-wrap;
-    border-right: 3px solid #ff2e8f;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
+    font-size:38px;
+    color:#ff2e8f;
+    margin-top:40px;
+    white-space:pre-wrap;
+    border-right:3px solid #ff2e8f;
+    width:fit-content;
+    margin:auto;
+    overflow:hidden;
 }
 
-/* BUTTON */
+/* Buttons */
 button {
-    background: #ff56a7;
-    color: white;
-    border: none;
-    padding: 15px 35px;
-    border-radius: 40px;
-    font-size: 22px;
-    cursor: pointer;
+    background:#ff56a7;
+    color:white;
+    border:none;
+    padding:15px 35px;
+    border-radius:40px;
+    font-size:22px;
+    cursor:pointer;
     animation: glow 1.5s infinite alternate;
 }
 @keyframes glow {
@@ -48,70 +46,48 @@ button {
     to { box-shadow: 0 0 20px #ff2e8f; }
 }
 
-/* ENVELOPE */
-#letterContainer {
-    display: none;
-    margin-top: 30px;
-}
-
+/* Envelope */
+#letterContainer { display:none; margin-top:30px; }
 #envelope {
-    width: 260px;
-    height: 180px;
-    margin: auto;
-    background: pink;
-    border-radius: 10px;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 0 15px #ff9ecb;
+    width:260px; height:180px;
+    margin:auto;
+    background:pink;
+    border-radius:10px;
+    position:relative;
+    cursor:pointer;
+    box-shadow:0 0 15px #ff9ecb;
 }
-
 #envelope:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-left: 130px solid transparent;
-    border-right: 130px solid transparent;
-    border-bottom: 90px solid #ff9ecb;
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    border-left:130px solid transparent;
+    border-right:130px solid transparent;
+    border-bottom:90px solid #ff9ecb;
 }
-
 #letter {
-    display: none;
-    width: 240px;
-    background: white;
-    margin: auto;
-    padding: 15px;
-    border-radius: 10px;
-    color: #ff2e8f;
-    font-size: 18px;
+    display:none;
+    width:240px;
+    background:white;
+    margin:auto;
+    padding:15px;
+    border-radius:10px;
+    color:#ff2e8f;
+    font-size:18px;
 }
 
-/* CAKE */
-#cakeArea {
-    display: none;
-    margin-top: 20px;
-}
+/* Cake */
+#cakeArea { display:none; margin-top:20px; }
+#cakeCanvas { background:#fff; border-radius:20px; }
 
-#cakeCanvas {
-    background: #fff;
-    border-radius: 20px;
-}
+/* Slideshow */
+#slideshow { display:none; margin-top:20px; }
+.slideImg { width:90%; border-radius:20px; box-shadow:0 0 12px pink; }
 
-/* SLIDESHOW */
-#slideshow {
-    display: none;
-    margin-top: 20px;
-}
-.slideImg {
-    width: 90%;
-    border-radius: 20px;
-    box-shadow: 0 0 12px pink;
-}
-
-/* POPUP */
+/* Popup */
 #popup {
     display:none;
-    position: fixed;
+    position:fixed;
     top:0; left:0;
     width:100%; height:100%;
     background:rgba(0,0,0,0.7);
@@ -120,75 +96,62 @@ button {
     justify-content:center;
     align-items:center;
     z-index:999;
+    display:flex;
 }
 
-/* SPARKLE CURSOR */
+/* Sparkle cursor */
 .cursor-sparkle {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    background: hotpink;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: sparkle 0.5s ease-out;
+    position:fixed;
+    width:10px; height:10px;
+    background:hotpink;
+    border-radius:50%;
+    pointer-events:none;
+    animation:sparkle 0.5s ease-out;
 }
-@keyframes sparkle {
-    from { transform: scale(1); opacity: 1; }
-    to   { transform: scale(3); opacity: 0; }
-}
+@keyframes sparkle { from {transform:scale(1);opacity:1;} to {transform:scale(3);opacity:0;} }
 
-/* FLOATING HEARTS */
+/* Floating hearts */
 .heart {
-    position: fixed;
-    font-size: 24px;
-    color: pink;
-    animation: floatUp 4s linear infinite;
+    position:fixed;
+    font-size:24px;
+    color:pink;
+    animation:floatUp 4s linear infinite;
 }
-@keyframes floatUp {
-    0% { transform: translateY(0) scale(1);}
-    100% { transform: translateY(-800px) scale(1.5);}
-}
+@keyframes floatUp { 0% { transform:translateY(0) scale(1); } 100% { transform:translateY(-800px) scale(1.5);} }
 
-/* CONFETTI */
+/* Confetti */
 .confetti-piece {
-    position: fixed;
-    width: 10px; height: 10px;
-    background: #ff69b4;
-    opacity: 0.8;
-    animation: confettiFall 3s linear infinite;
+    position:fixed;
+    width:10px;height:10px;
+    background:#ff69b4;
+    opacity:0.8;
+    animation:confettiFall 3s linear infinite;
 }
-@keyframes confettiFall {
-    0% { transform: translateY(-10px) rotate(0deg);}
-    100% { transform: translateY(800px) rotate(360deg);}
-}
+@keyframes confettiFall { 0% { transform:translateY(-10px) rotate(0deg);} 100% { transform:translateY(800px) rotate(360deg);} }
 
-/* BALLOONS */
+/* Balloons */
 .balloon {
-    position: fixed;
-    width: 40px;
-    height: 60px;
-    background: pink;
-    border-radius: 50%;
-    animation: fly 8s linear infinite;
+    position:fixed;
+    width:40px; height:60px;
+    background:pink;
+    border-radius:50%;
+    animation:fly 8s linear infinite;
 }
-@keyframes fly {
-    0% { transform: translateY(800px) translateX(0);}
-    100% { transform: translateY(-200px) translateX(100px);}
-}
+@keyframes fly { 0% { transform:translateY(800px) translateX(0);} 100% { transform:translateY(-200px) translateX(100px);} }
 </style>
 </head>
 <body>
 
-<!-- MUSIC -->
+<!-- Music -->
 <audio autoplay loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a2e0a73fd.mp3?filename=happy-birthday-109499.mp3">
 </audio>
 
-<!-- TYPING INTRO -->
+<!-- Typing Intro -->
 <div id="typingIntro"></div>
 <button id="startBtn" onclick="showEnvelope()">Continue 🎀</button>
 
-<!-- ENVELOPE -->
+<!-- Envelope -->
 <div id="letterContainer">
     <div id="envelope" onclick="openLetter()"></div>
     <div id="letter">
@@ -199,83 +162,22 @@ button {
     </div>
 </div>
 
-<!-- CAKE -->
-/* CAKE LOGIC */
-let step = 0;
-let canvas = document.getElementById("cakeCanvas");
-let ctx = canvas.getContext("2d");
-let flame = false;
+<!-- Cake -->
+<div id="cakeArea">
+    <canvas id="cakeCanvas" width="400" height="400"></canvas><br>
+    <button id="cakeBtn" onclick="nextStep()">Let's Cut The Cake 🎀</button>
+</div>
 
-function drawCake() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    // Draw cake (white round)
-    ctx.fillStyle = "#ffffff";
-    ctx.beginPath();
-    ctx.arc(200,250,100,0,Math.PI*2); // bottom layer
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(200,200,70,0,Math.PI*2); // top layer
-    ctx.fill();
-
-    // Draw candle (pink)
-    ctx.fillStyle = "#ff69b4";
-    ctx.fillRect(195,100,10,60);
-
-    // Draw flame
-    if(flame){
-        ctx.beginPath();
-        ctx.arc(200,95,12,0,Math.PI*2);
-        ctx.fillStyle = "yellow";
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(200,95,6,0,Math.PI*2);
-        ctx.fillStyle = "orange";
-        ctx.fill();
-    }
-}
-
-function nextStep() {
-    step++;
-    if(step===1){
-        document.getElementById("cakeBtn").innerText="Light Candle";
-    } else if(step===2){
-        flame=true;
-        drawCake();
-        document.getElementById("cakeBtn").innerText="Blow Candle";
-    } else if(step===3){
-        // Countdown 3 seconds
-        let countdown=3;
-        document.getElementById("cakeBtn").innerText = `Blow in ${countdown}`;
-        let timer = setInterval(()=>{
-            countdown--;
-            if(countdown>0){
-                document.getElementById("cakeBtn").innerText = `Blow in ${countdown}`;
-            } else {
-                clearInterval(timer);
-                flame=false;
-                drawCake();
-                document.getElementById("cakeBtn").innerText = "Cut The Cake 🍰";
-            }
-        },1000);
-    } else if(step===4){
-        enableCutting();
-        document.getElementById("cakeBtn").style.display="none";
-    }
-}
-
-
-<!-- POPUP -->
+<!-- Popup -->
 <div id="popup">🎉 Happy Birthday Zubeesha 🎉</div>
 
-<!-- SLIDESHOW -->
+<!-- Slideshow -->
 <div id="slideshow">
     <img id="slideImg" class="slideImg" src="1.jpg">
 </div>
 
 <script>
-/* TYPING INTRO */
+/* Typing Intro */
 let intro = "Happy Birthday\nAnnoying & Intelligent\nZubeesha 🎀";
 let idx = 0;
 function type() {
@@ -287,65 +189,67 @@ function type() {
 }
 type();
 
-/* SHOW ENVELOPE */
+/* Show Envelope */
 function showEnvelope() {
-    document.getElementById("startBtn").style.display = "none";
-    document.getElementById("letterContainer").style.display = "block";
+    document.getElementById("startBtn").style.display="none";
+    document.getElementById("letterContainer").style.display="block";
 }
 
-/* OPEN LETTER */
+/* Open Letter */
 function openLetter() {
-    document.getElementById("letter").style.display = "block";
-
-    setTimeout(() => {
-        document.getElementById("letterContainer").style.display = "none";
-        document.getElementById("cakeArea").style.display = "block";
-        document.getElementById("cakeBtn").style.display = "block";
+    document.getElementById("letter").style.display="block";
+    setTimeout(()=>{
+        document.getElementById("letterContainer").style.display="none";
+        document.getElementById("cakeArea").style.display="block";
         drawCake();
-    }, 2000);
+    },2000);
 }
 
-/* CAKE LOGIC */
-let flame = true;
-let step = 0;
-let canvas, ctx;
+/* Cake Logic */
+let step=0, flame=false, canvas=document.getElementById("cakeCanvas"), ctx=canvas.getContext("2d");
 
-function drawCake() {
-    canvas = document.getElementById("cakeCanvas");
-    ctx = canvas.getContext("2d");
-    ctx.clearRect(0,0,350,350);
-
-    ctx.fillStyle="#ff9ecb"; ctx.fillRect(60,160,230,140);
-    ctx.fillStyle="#ff65b3"; ctx.fillRect(60,130,230,40);
-
-    ctx.fillStyle="white"; ctx.fillRect(170,50,20,80);
-
-    if (flame) {
+function drawCake(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // Cake layers
+    ctx.fillStyle="#fff";
+    ctx.beginPath();
+    ctx.arc(200,250,100,0,2*Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(200,200,70,0,2*Math.PI);
+    ctx.fill();
+    // Candle
+    ctx.fillStyle="#ff69b4";
+    ctx.fillRect(195,100,10,60);
+    if(flame){
         ctx.beginPath();
-        ctx.arc(180,40,12,0,7);
-        ctx.fillStyle="yellow";
-        ctx.fill();
+        ctx.arc(200,95,12,0,2*Math.PI);
+        ctx.fillStyle="yellow"; ctx.fill();
+        ctx.beginPath();
+        ctx.arc(200,95,6,0,2*Math.PI);
+        ctx.fillStyle="orange"; ctx.fill();
     }
 }
 
-function nextStep() {
+function nextStep(){
     step++;
-    if(step===1){
-        document.getElementById("cakeBtn").innerText="Light Candle";
-    } else if(step===2){
-        flame=true; drawCake();
-        document.getElementById("cakeBtn").innerText="Blow Candle";
-    } else if(step===3){
-        flame=false; drawCake();
-        document.getElementById("cakeBtn").innerText="Cut The Cake 🍰";
-    } else if(step===4){
-        enableCutting();
-        document.getElementById("cakeBtn").style.display="none";
+    let btn=document.getElementById("cakeBtn");
+    if(step===1){ btn.innerText="Light Candle"; }
+    else if(step===2){ flame=true; drawCake(); btn.innerText="Blow Candle"; }
+    else if(step===3){
+        let countdown=3;
+        btn.innerText=`Blow in ${countdown}`;
+        let timer=setInterval(()=>{
+            countdown--;
+            if(countdown>0) btn.innerText=`Blow in ${countdown}`;
+            else { clearInterval(timer); flame=false; drawCake(); btn.innerText="Cut The Cake 🍰"; }
+        },1000);
     }
+    else if(step===4){ enableCutting(); btn.style.display="none"; }
 }
 
-/* CUTTING CAKE */
-let cutting = false;
+/* Cake Cutting */
+let cutting=false;
 function enableCutting(){
     canvas.addEventListener("touchstart",()=>cutting=true);
     canvas.addEventListener("touchend",finishCut);
@@ -359,83 +263,72 @@ function enableCutting(){
     });
 }
 
-/* AFTER CUTTING POPUP + SLIDESHOW */
+/* Finish cutting -> Popup & Slideshow */
 function finishCut(){
     cutting=false;
+    document.getElementById("cakeArea").style.display="none";
     showPopup();
 }
 function showPopup(){
     document.getElementById("popup").style.display="flex";
-
     setTimeout(()=>{
         document.getElementById("popup").style.display="none";
         startSlideshow();
     },3000);
 }
 
-/* SLIDESHOW */
-let slide = 1;
+/* Slideshow */
+let slide=1;
 function startSlideshow(){
     document.getElementById("slideshow").style.display="block";
     setInterval(()=>{
-        slide++;
-        if(slide>4) slide=1;
+        slide++; if(slide>4) slide=1;
         document.getElementById("slideImg").src = slide + ".jpg";
     },2500);
 }
 
-/* GLITTER CURSOR */
+/* Glitter Cursor */
 document.addEventListener("mousemove",e=>sparkle(e.clientX,e.clientY));
 document.addEventListener("touchmove",e=>{
-    let t=e.touches[0];
-    sparkle(t.clientX,t.clientY);
+    let t=e.touches[0]; sparkle(t.clientX,t.clientY);
 });
 function sparkle(x,y){
     let d=document.createElement("div");
     d.className="cursor-sparkle";
-    d.style.left=x+"px";
-    d.style.top=y+"px";
+    d.style.left=x+"px"; d.style.top=y+"px";
     document.body.appendChild(d);
     setTimeout(()=>d.remove(),400);
 }
 
-/* FLOATING HEARTS */
-function createHearts(){
-    setInterval(()=>{
-        let h=document.createElement("div");
-        h.className="heart";
-        h.style.left=Math.random()*window.innerWidth+"px";
-        h.style.fontSize=(12+Math.random()*18)+"px";
-        h.textContent="💖";
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(),4000);
-    },500);
-}
-createHearts();
+/* Floating Hearts */
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.fontSize=(12+Math.random()*18)+"px";
+    h.textContent="💖";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+},500);
 
-/* BALLOONS */
-function createBalloons(){
-    setInterval(()=>{
-        let b=document.createElement("div");
-        b.className="balloon";
-        b.style.left=Math.random()*window.innerWidth+"px";
-        document.body.appendChild(b);
-        setTimeout(()=>b.remove(),8000);
-    },1500);
-}
-createBalloons();
+/* Balloons */
+setInterval(()=>{
+    let b=document.createElement("div");
+    b.className="balloon";
+    b.style.left=Math.random()*window.innerWidth+"px";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),8000);
+},1500);
 
-/* CONFETTI */
-function createConfetti(){
-    setInterval(()=>{
-        let c=document.createElement("div");
-        c.className="confetti-piece";
-        c.style.left=Math.random()*window.innerWidth+"px";
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
-    },200);
-}
-createConfetti();
+/* Confetti */
+setInterval(()=>{
+    let c=document.createElement("div");
+    c.className="confetti-piece";
+    c.style.left=Math.random()*window.innerWidth+"px";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+},200);
+
 </script>
 
 </body>
