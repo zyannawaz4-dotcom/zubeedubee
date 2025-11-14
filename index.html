@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 
 <style>
-/* BASIC */
+/* BASIC STYLING */
 body {
     margin: 0;
     background: #ffd6f4;
@@ -136,6 +136,45 @@ button {
     from { transform: scale(1); opacity: 1; }
     to   { transform: scale(3); opacity: 0; }
 }
+
+/* FLOATING HEARTS */
+.heart {
+    position: fixed;
+    font-size: 24px;
+    color: pink;
+    animation: floatUp 4s linear infinite;
+}
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1);}
+    100% { transform: translateY(-800px) scale(1.5);}
+}
+
+/* CONFETTI */
+.confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: #ff69b4;
+    opacity: 0.8;
+    animation: confettiFall 3s linear infinite;
+}
+@keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg);}
+    100% { transform: translateY(800px) rotate(360deg);}
+}
+
+/* BALLOONS */
+.balloon {
+    position: fixed;
+    width: 40px;
+    height: 60px;
+    background: pink;
+    border-radius: 50%;
+    animation: fly 8s linear infinite;
+}
+@keyframes fly {
+    0% { transform: translateY(800px) translateX(0);}
+    100% { transform: translateY(-200px) translateX(100px);}
+}
 </style>
 </head>
 <body>
@@ -154,7 +193,7 @@ button {
     <div id="envelope" onclick="openLetter()"></div>
     <div id="letter">
         Dear Zubeesha 💗,<br><br>
-        You are special, annoying, precious, loved & intelligent.<br>
+        You are special, annoying & intelligent.<br>
         Today is all about YOU!<br><br>
         💕 Happy Birthday Princess 💕
     </div>
@@ -176,9 +215,8 @@ button {
 
 <script>
 /* TYPING INTRO */
-let intro = "Happy Birthday\nZubeesha 🎀";
+let intro = "Happy Birthday\nAnnoying & Intelligent\nZubeesha 🎀";
 let idx = 0;
-
 function type() {
     if (idx < intro.length) {
         document.getElementById("typingIntro").textContent += intro.charAt(idx);
@@ -214,7 +252,6 @@ let canvas, ctx;
 function drawCake() {
     canvas = document.getElementById("cakeCanvas");
     ctx = canvas.getContext("2d");
-
     ctx.clearRect(0,0,350,350);
 
     ctx.fillStyle="#ff9ecb"; ctx.fillRect(60,160,230,140);
@@ -232,7 +269,6 @@ function drawCake() {
 
 function nextStep() {
     step++;
-
     if(step===1){
         document.getElementById("cakeBtn").innerText="Light Candle";
     } else if(step===2){
@@ -249,7 +285,6 @@ function nextStep() {
 
 /* CUTTING CAKE */
 let cutting = false;
-
 function enableCutting(){
     canvas.addEventListener("touchstart",()=>cutting=true);
     canvas.addEventListener("touchend",finishCut);
@@ -263,14 +298,14 @@ function enableCutting(){
     });
 }
 
+/* AFTER CUTTING POPUP + SLIDESHOW */
 function finishCut(){
     cutting=false;
     showPopup();
 }
-
-/* POPUP */
 function showPopup(){
     document.getElementById("popup").style.display="flex";
+
     setTimeout(()=>{
         document.getElementById("popup").style.display="none";
         startSlideshow();
@@ -302,6 +337,44 @@ function sparkle(x,y){
     document.body.appendChild(d);
     setTimeout(()=>d.remove(),400);
 }
+
+/* FLOATING HEARTS */
+function createHearts(){
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.style.left=Math.random()*window.innerWidth+"px";
+        h.style.fontSize=(12+Math.random()*18)+"px";
+        h.textContent="💖";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),4000);
+    },500);
+}
+createHearts();
+
+/* BALLOONS */
+function createBalloons(){
+    setInterval(()=>{
+        let b=document.createElement("div");
+        b.className="balloon";
+        b.style.left=Math.random()*window.innerWidth+"px";
+        document.body.appendChild(b);
+        setTimeout(()=>b.remove(),8000);
+    },1500);
+}
+createBalloons();
+
+/* CONFETTI */
+function createConfetti(){
+    setInterval(()=>{
+        let c=document.createElement("div");
+        c.className="confetti-piece";
+        c.style.left=Math.random()*window.innerWidth+"px";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    },200);
+}
+createConfetti();
 </script>
 
 </body>
