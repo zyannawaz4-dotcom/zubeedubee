@@ -151,7 +151,7 @@ button {
 <!-- Cake -->
 <div id="cakeArea">
     <canvas id="cakeCanvas" width="400" height="400"></canvas><br>
-    <button id="cakeBtn" onclick="nextStep()">Start Cake 🎂</button>
+    <button id="cakeBtn" onclick="lightCandle()">Light Candle 🕯️</button>
 </div>
 
 <!-- Popup -->
@@ -190,67 +190,80 @@ function openLetter(){
     },2000);
 }
 
-/* CAKE LOGIC */
-let step=0;
-let flame=false;
-let canvas=document.getElementById("cakeCanvas");
-let ctx=canvas.getContext("2d");
+/* CAKE CANVAS */
+let canvas = document.getElementById("cakeCanvas");
+let ctx = canvas.getContext("2d");
+let flame = false;
+let cake = {
+    x: 200,
+    y: 250,
+    radius: 100,
+    layers: 2,
+    sliceRemoved: []
+};
 
 function drawCake(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    // Cake layers
-    ctx.fillStyle="#ffffff";
-    ctx.beginPath();
-    ctx.arc(200,250,100,0,Math.PI*2); ctx.fill();
-    ctx.beginPath();
-    ctx.arc(200,200,70,0,Math.PI*2); ctx.fill();
-    // Candle
+
+    for(let i=0;i<cake.layers;i++){
+        ctx.beginPath();
+        ctx.arc(cake.x, cake.y - i*40, cake.radius, 0, Math.PI*2);
+        ctx.fillStyle="#fff0f5";
+        ctx.fill();
+        ctx.lineWidth=3;
+        ctx.strokeStyle="#ff69b4";
+        ctx.stroke();
+    }
+
+    // candle
     ctx.fillStyle="#ff69b4";
-    ctx.fillRect(195,110,10,60);
-    // Flame
+    ctx.fillRect(cake.x-5, cake.y - cake.layers*40 - 60, 10, 60);
+
+    // flame
     if(flame){
         ctx.beginPath();
-        ctx.arc(200,105,12,0,Math.PI*2);
+        ctx.arc(cake.x, cake.y - cake.layers*40 - 70, 10, 0, Math.PI*2);
         ctx.fillStyle="yellow"; ctx.fill();
         ctx.beginPath();
-        ctx.arc(200,105,6,0,Math.PI*2);
+        ctx.arc(cake.x, cake.y - cake.layers*40 - 70, 5, 0, Math.PI*2);
         ctx.fillStyle="orange"; ctx.fill();
     }
-}
 
-function nextStep(){
-    let btn=document.getElementById("cakeBtn");
-    step++;
-    if(step===1){ btn.innerText="Light Candle"; }
-    else if(step===2){ flame=true; drawCake(); btn.innerText="Blow Candle"; }
-    else if(step===3){
-        let countdown=3;
-        let timer=setInterval(()=>{
-            if(countdown>0){ btn.innerText="Blow in "+countdown; countdown--; }
-            else{ clearInterval(timer); flame=false; drawCake(); btn.innerText="Cut The Cake 🍰"; step++; }
-        },1000);
-    }else if(step===4){ enableCutting(); btn.style.display="none"; }
-}
-
-/* CAKE CUTTING */
-let cutting=false;
-function enableCutting(){
-    canvas.addEventListener("touchstart",()=>cutting=true);
-    canvas.addEventListener("touchend",finishCut);
-    canvas.addEventListener("touchmove",e=>{
-        if(!cutting) return;
-        let r=canvas.getBoundingClientRect();
-        let x=e.touches[0].clientX-r.left;
-        let y=e.touches[0].clientY-r.top;
-        ctx.strokeStyle="white"; ctx.lineWidth=12;
-        ctx.lineTo(x,y); ctx.stroke();
+    // removed slices
+    cake.sliceRemoved.forEach(s=>{
+        ctx.beginPath();
+        ctx.moveTo(cake.x,cake.y);
+        ctx.arc(cake.x,cake.y,cake.radius,s.start,s.end,false);
+        ctx.fillStyle="#ffd6f4";
+        ctx.fill();
     });
+}
+
+function lightCandle(){ flame=true; drawCake(); }
+
+/* Cake cutting */
+let cutting=false;
+canvas.addEventListener("mousedown", ()=>{ cutting=true; });
+canvas.addEventListener("mouseup", finishCut);
+canvas.addEventListener("mousemove", e=>{ if(!cutting) return; cutSlice(e.offsetX,e.offsetY); });
+canvas.addEventListener("touchstart", ()=>{ cutting=true; });
+canvas.addEventListener("touchend", finishCut);
+canvas.addEventListener("touchmove", e=>{ if(!cutting) return; let t=e.touches[0]; cutSlice(t.clientX-canvas.getBoundingClientRect().left,t.clientY-canvas.getBoundingClientRect().top); });
+
+function cutSlice(mx,my){
+    let angle=Math.atan2(my-cake.y,mx-cake.x);
+    if(angle<0) angle+=2*Math.PI;
+    for(let s of cake.sliceRemoved){ if(angle>=s.start && angle<=s.end) return; }
+    cake.sliceRemoved.push({start:angle-0.15,end:angle+0.15});
+    drawCake();
 }
 
 function finishCut(){
     cutting=false;
-    showPopup();
+    if(cake.sliceRemoved.length >=1) showPopup();
 }
+
+drawCake();
 
 /* POPUP */
 function showPopup(){
@@ -313,6 +326,5 @@ setInterval(()=>{
     setTimeout(()=>c.remove(),3000);
 },200);
 </script>
-
 </body>
 </html>
